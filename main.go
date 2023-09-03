@@ -1,9 +1,9 @@
-// v0.3
+// v0.4
 package main
 
 import (
 	"bufio"
-	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -79,7 +79,7 @@ func main() {
 	for {
 		select {
 		case data := <-bufferedIntChannel:
-			fmt.Println("Обработанные данные, ", data)
+			log.Println("Обработанные данные, ", data)
 		case <-done:
 			return
 		}
@@ -93,13 +93,13 @@ func read(nextStage chan<- int, done chan bool) {
 	for scanner.Scan() {
 		data = scanner.Text()
 		if strings.EqualFold(data, "Exit") {
-			fmt.Println("Программа завершила работу!")
+			log.Println("Программа завершила работу!")
 			close(done)
 			return
 		}
 		i, err := strconv.Atoi(data)
 		if err != nil {
-			fmt.Println("Программа обрабатывает только целые числа")
+			log.Println("Программа обрабатывает только целые числа")
 			continue
 		}
 		nextStage <- i
@@ -153,3 +153,4 @@ func bufferStageFunc(previousStageChannel <-chan int, nextStageChannel chan<- in
 		}
 	}
 }
+
