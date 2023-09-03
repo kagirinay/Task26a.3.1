@@ -1,3 +1,4 @@
+// n0.2
 package main
 
 import (
